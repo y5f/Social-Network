@@ -1,0 +1,174 @@
+<div class="col-sm-6 col-sm-offset-1 col-m-6 col-lg-6 col-xl-4">
+  <div class="row postarea">
+    <textarea ng-model="newTweet.content"
+
+              class="form-control"
+              placeholder="What are your thoughts?">
+    </textarea> <!--ng-keypress="sendWaste($event)"-->
+    <div class="tagsarea">
+      <tags-input ng-model="newTweet.tags">
+        <!-- <auto-complete source="loadTags($query)"></auto-complete> -->
+      </tags-input>
+    </div>
+
+    <button class="button" ng-click="sendTweet()"><!--"($event)"-->
+      Submit
+    </button>
+
+  </div>
+  <br>
+
+  <div class="row">
+    <!--table class="waste-section"-->
+      <div class="col-sm-12">
+        <a ng-if="incomingWastes.length > 0" ng-click="setNewWastes()">There are {{difference}} new Wastes</a>
+      </div>
+      <div class="col-sm-12 waste-list-item-divider">
+      </div>
+  </div>
+
+
+
+  <div class="row waste-list-item" ng-repeat="waste in wastes">
+
+    <div class="col-sm-1 waste-list-item-image">
+        <image ng-src="{{waste.userImage}}" class="img-responsive">
+    </div>
+
+    <div class="col-sm-11">
+      <div class="row waste-list-item-header" >
+          <div class="col-sm-4 username">
+              <h4>{{waste.user}}</h4>
+          </div>
+          <div class="col-sm-8 postdate">
+              {{waste.date | date: 'dd/MM/yyyy hh:mm'}}
+              <strong>{{waste.date | fromNow}}</strong>
+          </div>
+      </div>
+
+      <div class="row waste-list-item-body">
+          <div class="col-sm-12">
+              <p>{{waste.content}}</p>
+          </div>
+      </div>
+
+      <div class="row waste-list-item-footer"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+
+        <!--tags-->
+        <span ng-repeat="tag in waste.tags">
+          <span class="label label-info">
+            {{tag.text}}
+          </span>
+        </span>
+
+        <!--actions-->
+        <button ng-if="isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unstar(user._id, waste._id)">
+          <span class="glyphicon glyphicon-star" style="color: #CF7C00;" ></span>
+        </button>
+        <button ng-if="!isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="star(user._id, waste._id)"  >
+          <span class="glyphicon glyphicon-star-empty"></span>
+        </button>
+
+        <button ng-if="isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unretweet(user._id, waste._id)">
+          <span class="glyphicon glyphicon-share-alt" style="color: #CF7C00;" ></span>
+        </button>
+        <button ng-if="!isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="retweet(user._id, waste._id)"  >
+          <span class="glyphicon glyphicon-share-alt"></span>
+        </button>
+
+        <br/>
+      <div>{{post.stars.length}}</div>
+      </div>
+    </div>
+
+    <!--div class="waste-list-item-divider"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+      <div class="col-sm-12 waste-list-item-divider">
+      </div>
+  </div>
+</div>
+
+<!-- Users, following and followers-->
+<div class="col-sm-4" ng-controller="FollowController">
+  <div class="col-sm-12 followheader">
+    <h4>Users</h4>
+
+    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+        ng-show="user._id !== waster._id">
+        <div class="usersgridheader">
+          {{waster.email}}
+          <span class="glyphicon glyphicon-ok-circle glyphfollowed" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)" style="color: green;" ia-hidden="true"></span>
+        </div>
+        <div class="usersgridoverlay">
+          {{waster.email}}
+
+          <p>&nbsp</p>
+          <div class="unfollowicon">
+            <a ng-click="unfollow(user._id, waster._id)" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)">
+              Unfollow
+              <span class="glyphicon glyphicon-remove-circle glyphunfollow" style="color: orange;" ia-hidden="true" ng-click="unfollow(user._id, waster._id)"></span>
+            </a>
+            <a ng-click="follow(user._id, waster._id)" ng-if="loggedIn" ng-show="!checkIsFollowing(waster._id)">
+              Follow
+             <span class="glyphicon glyphicon-plus glyphunfollow" style="color: green;" ia-hidden="true" ng-click="follow(user._id, waster._id)"></span>
+            </a>
+          </div>
+        </div>
+    </div>
+  </div>
+  <p>&nbsp</p>
+  <div class="col-sm-12 followheader" ng-if="loggedIn == true">
+    <h4>Users you are following</h4>
+  <!--/div>
+  <div class="col-sm-12 followbody" ng-if="loggedIn"-->
+    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+        ng-show="user._id !== waster._id && checkIsFollowing(waster._id)" ng-mouseover="showInfo()">
+        <div class="usersgridheader">
+          {{waster.email}}
+          <span class="glyphicon glyphicon-ok-circle glyphfollowed" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)" style="color: green;" ia-hidden="true"></span>
+        </div>
+        <div class="usersgridoverlay">
+          {{waster.email}}
+          <p>&nbsp</p>
+          <div class="unfollowicon">
+            <a ng-click="unfollow(user._id, waster._id)" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)">
+              Unfollow
+              <span class="glyphicon glyphicon-remove-circle glyphunfollow" style="color: orange;" ia-hidden="true" ng-click="unfollow(user._id, waster._id)"></span>
+            </a>
+            <a ng-click="follow(user._id, waster._id)" ng-if="loggedIn" ng-show="!checkIsFollowing(waster._id)">
+              Follow
+             <span class="glyphicon glyphicon-plus glyphunfollow" style="color: green;" ia-hidden="true" ng-click="follow(user._id, waster._id)"></span>
+            </a>
+          </div>
+         <!--/div-->
+        </div>
+    </div>
+  </div>
+  <p>&nbsp</p>
+
+  <div class="col-sm-12 followheader" ng-if="loggedIn">
+    <h4>Users following you</h4>
+
+    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+        ng-show="user._id !== waster._id && checkIsFollowedBy(waster._id)">
+
+        <div class="usersgridheader">
+          {{waster.email}}
+          <span class="glyphicon glyphicon-ok-circle glyphfollowed" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)" style="color: green;" ia-hidden="true"></span>
+        </div>
+        <div class="usersgridoverlay">
+          {{waster.email}}
+          <p>&nbsp</p>
+          <div class="unfollowicon">
+            <a ng-click="unfollow(user._id, waster._id)" ng-if="loggedIn" ng-show="checkIsFollowing(waster._id)">
+              Unfollow
+              <span class="glyphicon glyphicon-remove-circle glyphunfollow" style="color: orange;" ia-hidden="true" ng-click="unfollow(user._id, waster._id)"></span>
+            </a>
+            <a ng-click="follow(user._id, waster._id)" ng-if="loggedIn" ng-show="!checkIsFollowing(waster._id)">
+              Follow
+             <span class="glyphicon glyphicon-plus glyphunfollow" style="color: green;" ia-hidden="true" ng-click="follow(user._id, waster._id)"></span>
+            </a>
+          </div>
+    </div>
+
+</div>
+</div>

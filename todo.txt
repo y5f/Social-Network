@@ -1,0 +1,34 @@
+[Alpha] Search functionality
+[Alpha] Animations on ng-hide / ng-repeat
+[Done] Starring
+[Done] Retweeting
+[Done] fix 'following' newsfeed
+[Alpha] tweet tags
+
+refactor all array pushing and splicing into single pushentity and spliceentity functions
+refactor logins with JWTs
+retweeting in actual newsfeed
+treat tags as hashtags (make browsable)
+markup in tweets
+polls in tweets
+images in tweets
+view starred tweets
+show numbers of stars/retweets (will need to store data in wastes.js)
+websockets
+activity log
+notifications
+seeing the activity of those you follow, then stories e.g. 'user voted in this poll'
+rewrite navbar into directive
+deleting posts if theyre your own
+removing posts from your follow feed
+test suite
+
+gulp
+client side validation
+server side validation
+dashboard
+hashtag capability?
+Browse by tag / hashtag
+image crop on upload
+limit retrieved + infinite scroll
+tag people in posts

@@ -1,0 +1,121 @@
+<div class="col-sm-8 col-sm-offset-2">
+
+  <div class="row">
+      <h2>Search Results</h2>
+  </div>
+
+  <!--debugging>
+  <div class="row">
+    {{userResults}}
+  </div-->
+  <p></p>
+
+  <!--display results relating to users-->
+
+  <div class="col-sm-10 col-sm-offset-1"> <!--ng-controller="FollowController"-->
+    <div class="col-sm-12 followheader">
+      Users
+    </div>
+    <div class="col-sm-12 followbody">
+      <div class="col-sm-3 col-xs-3 usersgrid" ng-repeat="waster in userResults.users" style="background-image: url('{{waster.image}}'); background-size: cover"
+          ng-show="user._id !== waster._id">
+          <div class="usersgridheader">
+            {{waster.email}}
+            <a ng-click="follow(user._id, waster._id)"
+               ng-if="loggedIn"
+               ng-hide="checkIsFollowing(waster._id)">Follow</a>
+            <a ng-click="unfollow(user._id, waster._id)"
+               ng-if="loggedIn"
+               ng-show="checkIsFollowing(waster._id)">Unfollow</a>
+          </div>
+    </div>
+  </div>
+    <div class="col-sm-12 followheader" ng-if="loggedIn">
+      Users you are following
+    </div>
+    <div class="col-sm-12 followbody" ng-if="loggedIn">
+      <div class="col-sm-3 col-xs-3 usersgrid" ng-repeat="waster in userResults.users" style="background-image: url('{{waster.image}}'); background-size: cover"
+          ng-show="user._id !== waster._id && checkIsFollowing(waster._id)">
+          <div class="usersgridheader">
+            {{waster.email}}
+            <a ng-click="unfollow(user._id, waster._id)"
+               ng-show="checkIsFollowing(waster._id)">Unfollow
+             </a>
+           </div>
+      </div>
+    </div>
+    <div class="col-sm-12 followheader" ng-if="loggedIn">
+      Users following you
+    </div>
+    <div class="col-sm-12 followbody" ng-if="loggedIn">
+      <div class="col-sm-3 col-xs-3 usersgrid" ng-repeat="waster in userResults.users" style="background-image: url('{{waster.image}}'); background-size: cover"
+          ng-show="user._id !== waster._id && checkIsFollowedBy(waster._id)">
+          <div class="usersgridheader">
+          {{waster.email}}
+          </div>
+      </div>
+
+  </div>
+
+
+
+  <!-- display results relating to tweets-->
+  <div class="col-sm-12 followheader">
+    Tweets
+  </div>
+
+  <div class="col-sm-6 col-sm-offset-1">
+
+    <div class="row waste-list-item" ng-repeat="waste in userResults.tweets">
+
+      <div class="col-sm-1 waste-list-item-image">
+          <image ng-src="{{waste.userImage}}" class="img-responsive">
+      </div>
+
+      <div class="col-sm-11">
+        <div class="row waste-list-item-header" >
+            <div class="col-sm-4 username">
+                <h4>{{waste.user}}</h4>
+            </div>
+            <div class="col-sm-8 postdate">
+                {{waste.date | date: 'dd/MM/yyyy hh:mm'}}
+                <strong>{{waste.date | fromNow}}</strong>
+            </div>
+        </div>
+
+        <div class="row waste-list-item-body">
+            <div class="col-sm-12">
+                <p>{{waste.content}}</p>
+            </div>
+        </div>
+
+        <div class="row waste-list-item-footer"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+          <button ng-if="isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unstar(user._id, waste._id)">
+            <span class="glyphicon glyphicon-star" style="color: #CF7C00;" ></span>
+          </button>
+          <button ng-if="!isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="star(user._id, waste._id)"  >
+            <span class="glyphicon glyphicon-star-empty"></span>
+          </button>
+
+          <button ng-if="isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unretweet(user._id, waste._id)">
+            <span class="glyphicon glyphicon-share-alt" style="color: #CF7C00;" ></span>
+          </button>
+          <button ng-if="!isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="retweet(user._id, waste._id)"  >
+            <span class="glyphicon glyphicon-share-alt"></span>
+          </button>
+
+          <br/>
+        <div>{{post.stars.length}}</div>
+        </div>
+      </div>
+
+
+      <!--div class="waste-list-item-divider"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+        <div class="col-sm-12 waste-list-item-divider">
+
+        </div>
+
+    </div>
+  </div>
+
+</div>

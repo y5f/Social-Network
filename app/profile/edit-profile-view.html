@@ -1,0 +1,27 @@
+<div class="col-sm-8 col-sm-offset-2">
+
+<div class="row">
+    <h2>Your Profile</h2>
+</div>
+
+ <div class="col-sm-6">
+  <div class="row">
+    <img class="img-responsive profile" ng-src="{{user.image}}">
+    <button class="button" ngf-select ng-model="file" ngf-pattern="'image/*'" accept="image/*">
+      Change Photo
+    </button>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="row">
+    <h3>Username</h3>
+    <input class="form-control" ng-model="user.username" ng-blur="updateUsername()">
+  </div>
+  <div class="row">
+    <h3>About You</h3>
+      <textarea class="form-control" ng-model="user.bio" ng-blur="updateBio()"> </textarea>
+  </div>
+</div>
+
+</div>

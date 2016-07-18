@@ -1,0 +1,180 @@
+/* base elements*/
+
+body {
+  margin-top: 70px;
+  font-family: muli;
+}
+
+@font-face {
+    font-family: muli;
+    src: url(../assets/Muli-Light.ttf);
+}
+.postarea{
+  background-color: #9ad7da;
+  padding: 10px 10px 10px 10px;
+  border-radius: 5px;
+}
+.tags{
+  max-height:50px;
+}
+.host{
+  max-height: 50px;
+}
+
+/*animation classes*/
+.ng-enter{
+  transition: 0.75s;
+  opacity: 0;
+}
+.ng-enter-active{
+  opacity: 1;
+}
+.ng-leave{
+  transition: 0.75s;
+  opacity: 1;
+}
+.ng-leave-active{
+  opacity: 0;
+}
+
+.ng-hide-add, .ng-hide-remove{
+  transition: all linear 0.75s;
+  opacity: 1;
+}
+.ng-hide{
+  opacity: 0;
+}
+
+
+.username h4{
+  font-size: 14px;
+  color: #9ad7da;
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+.waste-list-item{
+  /*background-color: #61616b;*/
+  padding: 0px 0px 0px 0px;
+}
+.waste-list-item-header {
+  background-color: #F1F1F1;
+  background-clip:content-box;
+  padding: 0px 0px 0px 0px;
+}
+.waste-list-item-body {
+  background-color: #FFFFFF;
+  padding: 0px 0px 0px 0px;
+}
+.waste-list-item-footer{
+  background-color: #F1F1F1;
+  background-clip:padding-box;
+  padding: 0px 0px 5px 0px;
+  /*overflow: hidden;*/
+}
+.waste-list-item-divider{
+  background-color: #61616b;
+  background-clip:border-box;
+  padding: 0px 0px 0px 0px;
+  min-height: 10px;
+}
+.waste-list-item-image img {
+  /*max-width: 100px;*/
+  /*max-height: 100%;*/
+  max-height: 100%;
+  }
+.waste-list-item-image {
+  padding: 0px 0px 0px 0px;
+  background-color: #FFFFFF;
+  /*display: block;*/
+  margin-left: auto;
+  margin-right: auto;
+  overflow: hidden;
+  max-width: 100%;
+}
+.postdate{
+  text-align: right;
+}
+
+.usersgrid{
+  height: 100px;
+  overflow: hidden;
+  background-origin: content-box;
+  background-repeat: no-repeat;
+  border-style: solid;
+  border-color: #9ad7da;
+  border-width: thin;
+  padding: 2px 2px 2px 2px;
+}
+
+.usersgridheader{
+  opacity: 1;
+  /*min-height: 50%;*/
+  min-width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  background-origin: border-box;
+  color: black;
+  text-align: center;
+}
+div.usersgrid:hover .usersgridheader{
+  display: none;
+}
+.usersgridoverlay{
+  display: none;
+}
+div.usersgrid:hover .usersgridoverlay{
+  /*opacity: 0.7;*/
+  min-height: 100%;
+  min-width: 100%;
+  background-color: rgba(255, 255, 255, 0.7);
+  color: black;
+  background-origin: border-box;
+  display: block;
+  text-align: center;
+}
+.unfollowicon{
+  display: none;
+}
+div.usersgrid:hover .unfollowicon{
+  display: block;
+  position: absolute;
+  bottom: 10%;
+  right: 25%;
+}
+span.glyphunfollow{
+  font-size: 1.2em;
+}
+span.glyphfollowed{
+  font-size: 1em;
+}
+
+.followheader{
+  background-color: #F1F1F1; /*#9ad7da;*/
+  background-clip: content-box;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+  padding: 0px 0px 0px 0px;
+  font-family: muli;
+  color: white;
+
+}
+.followheader h4{
+  font-size: 18px;
+  color: #61616b;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  padding-left: 5px;
+}
+.followbody{
+  padding: 2px 0px 10px 0px;
+  height: 100%;
+  width: 100%;
+}
+
+.img-thumb{
+  max-height: 30px;
+}
+
+.profile{
+  max-height: 300px;
+  max-width: 300px;
+}

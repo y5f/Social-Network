@@ -52,6 +52,6 @@ app.post('/api/users/unretweet', userController.unretweet);
 //search
 app.post('/api/search', searchController.search);
 
-app.listen('3000' , function(){
+app.listen(process.ENV.port || '3000' , function(){
   console.log("Server listening on port 3000")
 })

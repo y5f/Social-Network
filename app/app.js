@@ -1,5 +1,5 @@
 (function(){
-  angular.module('social', ['ui.router', 'ngFileUpload', 'ngAnimate', 'ngTagsInput'])
+  angular.module('social', ['ui.router', 'ngFileUpload', 'ngAnimate', 'ngTagsInput', 'ngImgCrop'])
     .config(function($stateProvider, $urlRouterProvider){
 
         $urlRouterProvider.otherwise("/");

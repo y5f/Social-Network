@@ -1,27 +1,57 @@
 <div class="col-sm-8 col-sm-offset-2">
 
-<div class="row">
-    <h2>Your Profile</h2>
+  <div class="row">
+      <h2>Your Profile</h2>
+  </div>
+
+   <div class="col-sm-6">
+    <div class="row">
+      <div>Your Profile Picture</div>
+      <img class="img-responsive profile" ng-src="{{user.image}}">
+      <br>
+      <form name="myForm">
+            <div>Change Profile Picture
+            <button ngf-select ng-model="picFile" accept="image/*">
+                Select Picture</button>
+            </div>
+            <div ngf-drop ng-model="picFile" ngf-pattern="image/*"
+                 class="cropArea">
+                <img-crop image="picFile  | ngfDataUrl"
+                result-image="croppedDataUrl" ng-init="croppedDataUrl=''">
+                </img-crop>
+            </div>
+            <!--div-->
+                <img ng-src="{{croppedDataUrl}}" />
+            <!--/div-->
+            <button ng-click="upload(croppedDataUrl, picFile.name)">Submit</button>
+
+            <span class="progress" ng-show="progress >= 0">
+              <div style="width:{{progress}}%" ng-bind="progress + '%'"></div>
+            </span>
+            <span ng-show="result">Upload Successful</span>
+            <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+        </form>
+
+      <!--button class="button" ngf-select ng-model="file" ngf-pattern="'image/*'" accept="image/*">
+        Change Photo
+      </button-->
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="row">
+      <h3>Username</h3>
+      <input class="form-control" ng-model="user.username" ng-blur="updateUsername()">
+    </div>
+    <div class="row">
+      <h3>About You</h3>
+        <textarea class="form-control" ng-model="user.bio" ng-blur="updateBio()"> </textarea>
+    </div>
+  </div>
+
 </div>
 
- <div class="col-sm-6">
-  <div class="row">
-    <img class="img-responsive profile" ng-src="{{user.image}}">
-    <button class="button" ngf-select ng-model="file" ngf-pattern="'image/*'" accept="image/*">
-      Change Photo
-    </button>
-  </div>
-</div>
+<div class="col-xl-6 col-xl-offset-3">
 
-<div class="col-sm-6">
-  <div class="row">
-    <h3>Username</h3>
-    <input class="form-control" ng-model="user.username" ng-blur="updateUsername()">
-  </div>
-  <div class="row">
-    <h3>About You</h3>
-      <textarea class="form-control" ng-model="user.bio" ng-blur="updateBio()"> </textarea>
-  </div>
-</div>
 
 </div>

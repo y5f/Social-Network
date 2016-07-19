@@ -5,6 +5,12 @@ var mv = require('mv');
 
 module.exports.updatePhoto = function(req, res){
   var file = req.files.file;
+  console.log("below = req.body")
+  console.log(req.body);
+  console.log("below = req.data")
+  console.log("below = req.files.file")
+  console.log(req.files.file)
+  console.log(req.data);
   var userId = req.body.userId;
 
   var uploadDate = new Date().toISOString;
@@ -36,7 +42,7 @@ module.exports.updatePhoto = function(req, res){
           }
 
         })
-      })  
+      })
     }
   });
   /*

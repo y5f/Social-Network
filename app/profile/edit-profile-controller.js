@@ -1,23 +1,29 @@
 (function(){
   angular.module('social')
   //add Upload to dependencies
-    .controller('EditProfileController', ['Upload', '$scope', '$state', '$http', function(Upload, $scope, $state, $http){
+    .controller('EditProfileController', ['Upload', '$scope', '$state', '$http', '$timeout', function(Upload, $scope, $state, $http, $timeout){
 
         $scope.user = JSON.parse(localStorage['User-Data']); // || undefined;
 
+        /*
         $scope.$watch(function(){
           return $scope.file
         }, function(){
           $scope.upload($scope.file)
         });
+        */
 
-        $scope.upload = function(file){
-          if(file){
+        $scope.upload = function(dataUrl, name){
+          //if(file){
             Upload.upload({
               url: 'api/profile/editPhoto',
               method: 'POST',
-              data: {userId: $scope.user._id},
-              file: file
+              data: {
+                userId: $scope.user._id,
+                file: Upload.dataUrltoBlob(dataUrl, name)
+              }
+              /*data: {userId: $scope.user._id},
+              file: file*/
             }).progress(function(evt){
               console.log("uploading");
             }).success(function(data){
@@ -25,7 +31,7 @@
             }).error(function(error){
               console.log(error);
             })
-          }
+          //}
         }
 
         $scope.updateUsername = function(){

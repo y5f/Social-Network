@@ -10,7 +10,7 @@
       $interval(function(){
         if(localStorage['User-Data'] !== undefined){
         $scope.user = JSON.parse(localStorage['User-Data'])
-        console.dir($scope.user)
+        //console.dir($scope.user)
         }
       }, 2000);
 
@@ -150,7 +150,7 @@
       }
       //init
       getWastes(true);
-      console.dir($scope.wastes)
+      //console.dir($scope.wastes)
 
     }])
 

@@ -88,8 +88,8 @@ module.exports.unfollowUser = function(req, res){
             index = i;
           }
         }
-        console.log('array', waster.followers)
-        console.log('index', index)
+        //console.log('array', waster.followers)
+        //console.log('index', index)
         if (index > -1) {
           waster.followers.splice(index, 1);
           waster.save();
@@ -102,7 +102,7 @@ module.exports.unfollowUser = function(req, res){
           index = i;
         }
       }
-      console.log('index', index)
+      //console.log('index', index)
       if (index > -1) {
         follower.following.splice(index, 1);
         follower.save();
@@ -142,7 +142,7 @@ module.exports.starTweet = function(req, res){
   //send back updated user info for current active user
   Users.findById(userId, function(err, user){
     console.log("returning updated user info after following")
-    console.log(user)
+    //console.log(user)
     res.send(user);
   });
 }
@@ -170,8 +170,8 @@ module.exports.unstarTweet = function(req, res){
             index = i;
           }
         }
-        console.log('array', unstarrer.followers)
-        console.log('index', index)
+        //console.log('array', unstarrer.followers)
+        //console.log('index', index)
         if (index > -1) {
           unstarrer.starred.splice(index, 1);
           unstarrer.save();
@@ -184,7 +184,7 @@ module.exports.unstarTweet = function(req, res){
           index = i;
         }
       }
-      console.log('index', index)
+      //console.log('index', index)
       if (index > -1) {
         unstarrer.starred.splice(index, 1);
         unstarrer.save();
@@ -253,8 +253,8 @@ module.exports.unretweet = function(req, res){
             index = i;
           }
         }
-        console.log('array', unretweeter.retweeted)
-        console.log('index', index)
+        //console.log('array', unretweeter.retweeted)
+        //console.log('index', index)
         if (index > -1) {
           unretweeter.retweeted.splice(index, 1);
           unretweeter.save();
@@ -267,7 +267,7 @@ module.exports.unretweet = function(req, res){
           index = i;
         }
       }
-      console.log('index', index)
+      //console.log('index', index)
       if (index > -1) {
         unretweeter.retweeted.splice(index, 1);
         unretweeter.save();

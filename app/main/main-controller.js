@@ -4,7 +4,7 @@
 
       if(localStorage['User-Data'] !== undefined){
       $scope.user = JSON.parse(localStorage['User-Data'])
-      console.dir($scope.user)
+      //console.dir($scope.user)
       }
 
       $interval(function(){
@@ -28,7 +28,7 @@
           console.log(request)
 
           $http.post('api/waste/post', request).success(function(response){
-            console.log(response);
+            //console.log(response);
             $scope.wastes = response;
           }).error(function(error){
             console.log(error);
@@ -55,10 +55,10 @@
                 tweetId: tweetId};
 
         $http.post('api/users/unstar', request).success(function(response){
-          console.log(JSON.stringify(response))
+          //console.log(JSON.stringify(response))
           $http.post('api/users/user', request).success(function(response){
             console.log('Retrieving updated user info after unstar')
-            console.log(JSON.stringify(response))
+            //console.log(JSON.stringify(response))
             localStorage.setItem('User-Data', JSON.stringify(response));
             $scope.user = response;
           }).error(function(error){
@@ -96,10 +96,10 @@
                 tweetId: tweetId};
 
         $http.post('api/users/unretweet', request).success(function(response){
-          console.log(JSON.stringify(response))
+          //console.log(JSON.stringify(response))
           $http.post('api/users/user', request).success(function(response){
             console.log('Retrieving updated user info after unretweeting')
-            console.log(JSON.stringify(response))
+            //console.log(JSON.stringify(response))
             localStorage.setItem('User-Data', JSON.stringify(response));
             $scope.user = response;
           }).error(function(error){

@@ -1,7 +1,7 @@
 var Waste = require('../datasets/wastes');
 
 module.exports.postWaste = function(req,res){
-  console.log(req.body);
+  //console.log(req.body);
 
   var waste = new Waste(req.body);
   waste.save();
@@ -18,7 +18,7 @@ module.exports.postWaste = function(req,res){
 }
 
 module.exports.getWastes = function(req, res){
-  console.log(req.body)
+  //console.log(req.body)
   if(req.body.following.length == 0){
     //If not following anyone, show all tweets fro all users
     console.log("Getting posts from all users")

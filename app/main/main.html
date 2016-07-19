@@ -31,11 +31,44 @@
 
   <div class="row waste-list-item" ng-repeat="waste in wastes">
 
-    <div class="col-sm-1 waste-list-item-image">
+    <div class="col-xs-2 col-sm-1 waste-list-item-image">
         <image ng-src="{{waste.userImage}}" class="img-responsive">
     </div>
 
-    <div class="col-sm-11">
+    <div class="waste-list-item-floating-footer"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+
+      <!--tags-->
+      <div class="col-xs-12 floating-footer-container">
+      <div class="col-xs-offset-2 col-xs-6">
+      <span ng-repeat="tag in waste.tags" class="verticalalign">
+        <span class="label label-info">
+          {{tag.text}}
+        </span>
+      </span>
+      </div>
+
+      <!--actions-->
+      <div class="col-xs-4 tweetactions">
+      <button ng-if="isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unstar(user._id, waste._id)">
+        <span class="glyphicon glyphicon-star" style="color: #CF7C00;" ></span>
+      </button>
+      <button ng-if="!isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="star(user._id, waste._id)"  >
+        <span class="glyphicon glyphicon-star-empty"></span>
+      </button>
+
+      <button ng-if="isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unretweet(user._id, waste._id)">
+        <span class="glyphicon glyphicon-share-alt" style="color: #CF7C00;" ></span>
+      </button>
+      <button ng-if="!isRetweeted(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="retweet(user._id, waste._id)"  >
+        <span class="glyphicon glyphicon-share-alt"></span>
+      </button>
+      </div>
+    </div>
+      <br/>
+    <div>{{post.stars.length}}</div>
+    </div>
+
+    <div class="col-xs-10 col-sm-11">
       <div class="row waste-list-item-header" >
           <div class="col-sm-4 username">
               <h4>{{waste.user}}</h4>
@@ -51,17 +84,18 @@
               <p>{{waste.content}}</p>
           </div>
       </div>
+      <!--div class="clearfix visible-xs"></div-->
 
-      <div class="row waste-list-item-footer"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
+      <!--div class="row waste-list-item-footer">
 
-        <!--tags-->
+        <tags>
         <span ng-repeat="tag in waste.tags">
           <span class="label label-info">
             {{tag.text}}
           </span>
         </span>
 
-        <!--actions-->
+        <actions>
         <button ng-if="isStarred(waste._id)" type="button" style="background: transparent; border: 0;" ng-click="unstar(user._id, waste._id)">
           <span class="glyphicon glyphicon-star" style="color: #CF7C00;" ></span>
         </button>
@@ -78,7 +112,7 @@
 
         <br/>
       <div>{{post.stars.length}}</div>
-      </div>
+    </div-->
     </div>
 
     <!--div class="waste-list-item-divider"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->

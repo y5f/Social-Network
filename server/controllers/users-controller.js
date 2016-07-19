@@ -1,5 +1,51 @@
 var Users = require('../datasets/users');
 
+//check if given element exists already within array
+function checkAlreadyPerformed(toCheck, method, itemKey, matchValue){
+  return function(user){
+    console.log("hello from checkAlreadyPerformed. user:" + user)
+    console.log("toCheck.req.body" + toCheck.req.body[itemKey])
+    //var method = "starred"
+
+    //iterate through relevant array until a value matches that specified
+    var isInArray = user[method].some(function (userCheck) {
+      var checkId = userCheck[itemKey];
+      return checkId === toCheck.req.body[matchValue];
+      //res.status(statusCode).json(checkId === tweetId);
+    })
+    if(isInArray){
+      console.log("checkAlreadyPerformed: Already " + method + "! No changes made")
+    } else {
+      console.log("checkAlreadyPerformed: Not currently " + method + ", will try")
+      return user
+    }
+  }
+}
+//add element to array within user
+function pushItem(toPush, method, itemKey, value){
+  return function(user){
+    var key = itemKey;
+    var obj = {};
+    obj[key] = value;
+    console.log("About to push: " + itemKey + ": " + value)
+    user[method].push(obj)
+
+    return user.save();
+  }
+}
+//respond with new user object
+function respond(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity);
+    }
+  };
+}
+
+
+
+
 module.exports.getUsers = function(req, res){
   Users.find({}, function(err, usersData){
     if(err){
@@ -38,6 +84,18 @@ module.exports.followUser = function(req, res){
   var wasterId = req.body.wasterId
   console.log("this is the user to be followed: ", wasterId, "this is the follower: ", userId);
 
+  //new return function code using promises
+  Users.findById(req.body.wasterId)
+    .then(checkAlreadyPerformed(res, "followers", "userId", req.body.userId))
+    .then(pushItem(res, "followers", "userId", req.body.userId))
+    .then(console.log(res))
+
+  Users.findById(req.body.userId)
+    .then(checkAlreadyPerformed(res, "following", "userId", req.body.wasterId)) //needs to be waster id
+    .then(pushItem(res, "following", "userId", req.body.wasterId))
+    .then(console.log(res))
+    .then(respond(res));
+  /*
   Users.findById(userId, function(err, follower){
     var isInArray = follower.following.some(function (userCheck) {
       var checkId = userCheck.userId;
@@ -63,7 +121,7 @@ module.exports.followUser = function(req, res){
     console.log(user)
     res.send(user);
   });
-
+*/
 }
 
 module.exports.unfollowUser = function(req, res){
@@ -119,79 +177,17 @@ module.exports.unfollowUser = function(req, res){
 
 }
 
-function checkAlreadyPerformed(toCheck, arg2){
-  return function(user){
-    console.log("hello from checkAlreadyPerformed. user:" + user)
-    console.log("toCheck.req.body" + toCheck.req.body.tweetId)
-    console.log(arg2)
-
-    var isInArray = user.starred.some(function (userCheck) {
-      var checkId = userCheck.tweetId;
-      return checkId === toCheck.req.body.tweetId;
-      //res.status(statusCode).json(checkId === tweetId);
-    })
-    if(isInArray){
-      console.log("checkAlreadyPerformed: Already starred! No changes made")
-    } else {
-      console.log("checkAlreadyPerformed: Not currently starred, will try")
-      return user
-    }
-  }
-}
-function pushItem(toPush, arg2){
-  return function(user){
-    console.log("About to push: " + toPush.req.body.tweetId)
-    user.starred.push({tweetId: toPush.req.body.tweetId})
-
-    return user.save();
-  }
-}
-function respond(res, statusCode) {
-  statusCode = statusCode || 200;
-  return function(entity) {
-    if (entity) {
-      res.status(statusCode).json(entity);
-    }
-  };
-}
-
-
 module.exports.starTweet = function(req, res){
   var userId = req.body.userId
   var tweetId = req.body.tweetId
   console.log("this is the tweet to be starred: ", tweetId, "this is the starrer: ", userId);
-
   //new return function code using promises
-  //add code later to count number of times tweet has been starred
-  Users.findById(userId)
-    .then(checkAlreadyPerformed(res, "star"))
-    .then(pushItem(res, "star"))
+    Users.findById(req.body.userId)
+    .then(checkAlreadyPerformed(res, "starred", "tweetId"))
+    .then(pushItem(res, "starred", "tweetId"))
     .then(respond(res));
-/*
-  Users.findById(userId, function(err, starrer){
-    var isInArray = starrer.starred.some(function (userCheck) {
-      var checkId = userCheck.tweetId;
-      return checkId === tweetId;
-      //res.status(statusCode).json(checkId === tweetId);
-    })
-    if(isInArray){
-      console.log("Already starred! No changes made", userId, tweetId)
-    } else {
-      Users.findById(userId, function(err, starrer){
-        starrer.starred.push({tweetId: tweetId});
-        starrer.save();
-        //add code later to count number of times tweet has been starred
-      });
-    }
-  })
-  //send back updated user info for current active user
-  Users.findById(userId, function(err, user){
-    console.log("returning updated user info after following")
-    //console.log(user)
-    REMOVED 160719 res.send(user);
-  });*/
+    //add code later to count number of times tweet has been starred
 }
-
 
 module.exports.unstarTweet = function(req, res){
   var userId = req.body.userId
@@ -248,31 +244,14 @@ module.exports.unstarTweet = function(req, res){
 
 
 module.exports.retweet = function(req, res){
-  var userId = req.body.userId
-  var tweetId = req.body.tweetId
-  console.log("this is the tweet to be retweeted: ", tweetId, "this is the retweeter: ", userId);
 
-  Users.findById(userId, function(err, starrer){
-    var isInArray = starrer.retweeted.some(function (userCheck) {
-      var checkId = userCheck.tweetId;
-      return checkId === tweetId;
-    });
-    if(isInArray){
-      console.log("Already retweeted! No changes made", userId, tweetId)
-    } else {
-      Users.findById(userId, function(err, retweeter){
-        retweeter.retweeted.push({tweetId: tweetId});
-        retweeter.save();
-        //add code later to count number of times tweet has been retweeted
-      });
-    }
-  });
-  //send back updated user info for current active user
-  Users.findById(userId, function(err, user){
-    console.log("returning updated user info after retweeting")
-    console.log(user)
-    res.send(user);
-  });
+  console.log("this is the tweet to be retweeted: ", req.body.tweetId, "this is the retweeter: ", req.body.userId);
+  //new return function code using promises
+  Users.findById(req.body.userId)
+  .then(checkAlreadyPerformed(res, "retweeted", "tweetId"))
+  .then(pushItem(res, "retweeted", "tweetId"))
+  .then(respond(res));
+  //add code later to count number of times tweet has been retweeted
 }
 
 

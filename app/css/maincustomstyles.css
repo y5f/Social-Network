@@ -55,6 +55,7 @@ body {
 .waste-list-item{
   /*background-color: #61616b;*/
   padding: 0px 0px 0px 0px;
+  position: relative;
 }
 .waste-list-item-header {
   background-color: #F1F1F1;
@@ -69,7 +70,31 @@ body {
   background-color: #F1F1F1;
   background-clip:padding-box;
   padding: 0px 0px 5px 0px;
-  /*overflow: hidden;*/
+  /*position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;*/
+}
+.waste-list-item-floating-footer{
+  background-color: #F1F1F1;
+  background-clip:padding-box;
+  padding: 0px 0px 5px 0px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  width:100%;
+  z-index: -1;
+}
+.tweetactions{
+  text-align: right;
+}
+.floating-footer-container{
+  padding: 0 0 0 0;
+}
+.verticalalign{
+  display: inline-block;
+  vertical-align: middle;
 }
 .waste-list-item-divider{
   background-color: #61616b;
@@ -81,6 +106,7 @@ body {
   /*max-width: 100px;*/
   /*max-height: 100%;*/
   max-height: 100%;
+  z-index: 10;
   }
 .waste-list-item-image {
   padding: 0px 0px 0px 0px;
@@ -90,6 +116,7 @@ body {
   margin-right: auto;
   overflow: hidden;
   max-width: 100%;
+  min-height: 100px;
 }
 .postdate{
   text-align: right;

@@ -119,16 +119,61 @@ module.exports.unfollowUser = function(req, res){
 
 }
 
+function checkAlreadyPerformed(toCheck, arg2){
+  return function(user){
+    console.log("hello from checkAlreadyPerformed. user:" + user)
+    console.log("toCheck.req.body" + toCheck.req.body.tweetId)
+    console.log(arg2)
+
+    var isInArray = user.starred.some(function (userCheck) {
+      var checkId = userCheck.tweetId;
+      return checkId === toCheck.req.body.tweetId;
+      //res.status(statusCode).json(checkId === tweetId);
+    })
+    if(isInArray){
+      console.log("checkAlreadyPerformed: Already starred! No changes made")
+    } else {
+      console.log("checkAlreadyPerformed: Not currently starred, will try")
+      return user
+    }
+  }
+}
+function pushItem(toPush, arg2){
+  return function(user){
+    console.log("About to push: " + toPush.req.body.tweetId)
+    user.starred.push({tweetId: toPush.req.body.tweetId})
+
+    return user.save();
+  }
+}
+function respond(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+      res.status(statusCode).json(entity);
+    }
+  };
+}
+
+
 module.exports.starTweet = function(req, res){
   var userId = req.body.userId
   var tweetId = req.body.tweetId
   console.log("this is the tweet to be starred: ", tweetId, "this is the starrer: ", userId);
 
+  //new return function code using promises
+  //add code later to count number of times tweet has been starred
+  Users.findById(userId)
+    .then(checkAlreadyPerformed(res, "star"))
+    .then(pushItem(res, "star"))
+    .then(respond(res));
+/*
   Users.findById(userId, function(err, starrer){
     var isInArray = starrer.starred.some(function (userCheck) {
       var checkId = userCheck.tweetId;
       return checkId === tweetId;
-    });
+      //res.status(statusCode).json(checkId === tweetId);
+    })
     if(isInArray){
       console.log("Already starred! No changes made", userId, tweetId)
     } else {
@@ -138,13 +183,13 @@ module.exports.starTweet = function(req, res){
         //add code later to count number of times tweet has been starred
       });
     }
-  });
+  })
   //send back updated user info for current active user
   Users.findById(userId, function(err, user){
     console.log("returning updated user info after following")
     //console.log(user)
-    res.send(user);
-  });
+    REMOVED 160719 res.send(user);
+  });*/
 }
 
 

@@ -41,14 +41,14 @@
                 tweetId: tweetId};
           $http.post('api/users/star', request).success(function(response){
 
-            $http.post('api/users/user', request).success(function(response){
-              console.log('Retrieving updated user info')
+            /*$http.post('api/users/user', request).success(function(response){
+              console.log('Retrieving updated user info')*/
               localStorage.setItem('User-Data', JSON.stringify(response));
               $scope.user = response;
             }).error(function(error){
                 console.log(error);
               });
-        });
+        //});
       }
       $scope.unstar = function(userId, tweetId){
         request = {userId: userId,

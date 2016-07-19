@@ -5,7 +5,7 @@
       if(localStorage['User-Data'] !== undefined){
         $scope.user = JSON.parse(localStorage['User-Data'])
         $scope.loggedIn = true;
-        console.dir($scope.user)
+        //console.dir($scope.user)
       }else{
         $scope.loggedIn = false;
       }
@@ -22,7 +22,7 @@
         $http.post('api/users/follow', request).success(function(response){
 
           $http.post('api/users/user', request).success(function(response){
-            console.log('within .then')
+            //console.log('within .then')
             localStorage.setItem('User-Data', JSON.stringify(response));
             $scope.user = response;
           }).error(function(error){
@@ -39,7 +39,7 @@
         console.log(JSON.stringify(response))
         $http.post('api/users/user', request).success(function(response){
           console.log('within .then')
-          console.log(JSON.stringify(response))
+          //console.log(JSON.stringify(response))
           localStorage.setItem('User-Data', JSON.stringify(response));
           $scope.user = response;
         }).error(function(error){

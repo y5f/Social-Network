@@ -36,9 +36,9 @@
               wasterId: wasterId};
 
       $http.post('api/users/unfollow', request).success(function(response){
-        console.log(JSON.stringify(response))
+        //console.log(JSON.stringify(response))
         $http.post('api/users/user', request).success(function(response){
-          console.log('within .then')
+          //console.log('within .then')
           //console.log(JSON.stringify(response))
           localStorage.setItem('User-Data', JSON.stringify(response));
           $scope.user = response;

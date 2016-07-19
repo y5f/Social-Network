@@ -48,6 +48,8 @@ module.exports.getWastes = function(req, res){
                 console.log(allWastes);
               }
             })
+      } else{
+        res.json(allWastes);
       }
     }
 }

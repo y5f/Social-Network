@@ -5,6 +5,8 @@
 [Done] fix 'following' newsfeed
 [Alpha] tweet tags
 [Alpha] image crop on upload [look into responding with new image since new image wont show on tweets until logout-login]
+[Alpha] Mobile first responsive design with progressive enhancement etc
+Password encryption using bcrypt
 
 [done pushing] refactor all array pushing and splicing into single pushentity and spliceentity functions
 refactor logins with JWTs

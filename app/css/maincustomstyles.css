@@ -65,6 +65,7 @@ body {
 .waste-list-item-body {
   background-color: #FFFFFF;
   padding: 0px 0px 0px 0px;
+  margin-bottom: 50px;
 }
 .waste-list-item-footer{
   background-color: #F1F1F1;
@@ -78,9 +79,10 @@ body {
 .waste-list-item-floating-footer{
   background-color: #F1F1F1;
   background-clip:padding-box;
-  padding: 0px 0px 5px 0px;
+  padding: 10px 0px 0px 0px;
+  /*margin-top: 5px;*/
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   left: 0;
   overflow: hidden;
   width:100%;
@@ -91,6 +93,7 @@ body {
 }
 .floating-footer-container{
   padding: 0 0 0 0;
+  margin-top: 0px;
 }
 .verticalalign{
   display: inline-block;
@@ -101,6 +104,16 @@ body {
   background-clip:border-box;
   padding: 0px 0px 0px 0px;
   min-height: 10px;
+}
+.waste-list-item-floating-divider{
+  background-color: #61616b;
+  background-clip:border-box;
+  padding: 0px 0px 0px 0px;
+  min-height: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
 }
 .waste-list-item-image img {
   /*max-width: 100px;*/

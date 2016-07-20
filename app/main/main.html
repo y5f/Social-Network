@@ -64,9 +64,14 @@
       </button>
       </div>
     </div>
+
+
       <br/>
     <div>{{post.stars.length}}</div>
     </div>
+
+        <div class="col-sm-12 waste-list-item-floating-divider">
+        </div>
 
     <div class="col-xs-10 col-sm-11">
       <div class="row waste-list-item-header" >
@@ -113,12 +118,13 @@
         <br/>
       <div>{{post.stars.length}}</div>
     </div-->
+
     </div>
 
     <!--div class="waste-list-item-divider"> <!--style="float: left;font-size: x-large; padding: 0; width: 2em; text-align: center;"-->
-      <div class="col-sm-12 waste-list-item-divider">
-      </div>
+
   </div>
+
 </div>
 
 <!-- Users, following and followers-->
@@ -126,7 +132,7 @@
   <div class="col-sm-12 followheader">
     <h4>Users</h4>
 
-    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+    <div class="col-xs-3 col-sm-3 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
         ng-show="user._id !== waster._id">
         <div class="usersgridheader">
           {{waster.email}}
@@ -154,7 +160,7 @@
     <h4>Users you are following</h4>
   <!--/div>
   <div class="col-sm-12 followbody" ng-if="loggedIn"-->
-    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+    <div class="col-xs-3 col-sm-3 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
         ng-show="user._id !== waster._id && checkIsFollowing(waster._id)" ng-mouseover="showInfo()">
         <div class="usersgridheader">
           {{waster.email}}
@@ -182,7 +188,7 @@
   <div class="col-sm-12 followheader" ng-if="loggedIn">
     <h4>Users following you</h4>
 
-    <div class="col-sm-4 col-xs-4 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
+    <div class="col-xs-3 col-sm-3 usersgrid" ng-repeat="waster in users" style="background-image: url('{{waster.image}}'); background-size: cover"
         ng-show="user._id !== waster._id && checkIsFollowedBy(waster._id)">
 
         <div class="usersgridheader">

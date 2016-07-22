@@ -5,9 +5,7 @@ var mv = require('mv');
 
 module.exports.updatePhoto = function(req, res){
   var file = req.files.file;
-  console.log("below = req.body")
-  console.log(req.body);
-  console.log("below = req.data")
+
   console.log("below = req.files.file")
   console.log(req.files.file)
   console.log(req.data);
@@ -36,7 +34,7 @@ module.exports.updatePhoto = function(req, res){
             console.log("failed save");
             res.json({status: 500})
           }else{
-            res.json({status: 200})
+            res.json({status: 200, image: user.image})
             console.log('file moved successfully from ' + tempPath + ' to ' + targetPath);
             console.log("save successful");
           }

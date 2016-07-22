@@ -18,8 +18,8 @@ module.exports.postWaste = function(req,res){
 }
 
 module.exports.getWastes = function(req, res){
-  //console.log(req.body)
-  if(req.body.following.length == 0){
+  console.log(req.body)
+  if(!req.body.following || req.body.following.length == 0){
     //If not following anyone, show all tweets fro all users
     console.log("Getting posts from all users")
     Waste.find({})

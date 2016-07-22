@@ -1,14 +1,17 @@
 (function(){
 
 angular.module('social')
-  .controller('NavigationController', ['$scope', '$http', '$state', '$rootScope', function($scope, $http, $state, $rootScope){
+  .controller('NavigationController', ['$scope', '$http', '$state', '$rootScope', 'Auth', 'store', 'jwtHelper', function($scope, $http, $state, $rootScope, Auth, store, jwtHelper){
 
       //$scope.user = JSON.parse(localStorage['User-Data']);
 
-      if(localStorage['User-Data']){
+      if(localStorage['jwt']){
         $scope.loggedIn = true;
         console.log("logged in? ", $scope.loggedIn)
-        $scope.user = JSON.parse(localStorage['User-Data'])
+        $scope.jwt = store.get('jwt');
+        $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
+        $scope.user = $scope.decodedJwt
+        console.log($scope.user)
       }else{
         $scope.loggedIn = false;
       }
@@ -18,12 +21,25 @@ angular.module('social')
         $http.post('api/user/login', $scope.login).success(function(response){
             console.log($scope.login)
             console.log(response)
-            localStorage.setItem('User-Data', JSON.stringify(response));
+
+            store.set('jwt', response.id_token);
+
+            //localStorage.setItem('User-Data', JSON.stringify(response));
             $scope.loggedIn = true;
-            $scope.user = response;
+
+            console.log($state)
+            //redirect user to home page
+            if($state.current.name === 'main'){
+              $state.reload();
+            }else{
+              $state.go('main');
+            }
+
         }).error(function(error){
             console.log(error);
           });
+
+          //Auth.login($scope.login);
 
       }
 

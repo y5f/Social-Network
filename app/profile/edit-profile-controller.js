@@ -1,10 +1,11 @@
 (function(){
   angular.module('social')
   //add Upload to dependencies
-    .controller('EditProfileController', ['Upload', '$scope', '$state', '$http', '$timeout', function(Upload, $scope, $state, $http, $timeout){
+    .controller('EditProfileController', ['Upload', '$scope', '$state', '$http', '$timeout', 'store', 'jwtHelper', function(Upload, $scope, $state, $http, $timeout, store, jwtHelper){
 
-        $scope.user = JSON.parse(localStorage['User-Data']); // || undefined;
-
+        $scope.jwt = store.get('jwt');
+        $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
+        $scope.user = $scope.decodedJwt
         /*
         $scope.$watch(function(){
           return $scope.file
@@ -27,7 +28,8 @@
             }).progress(function(evt){
               console.log("uploading");
             }).success(function(data){
-
+                console.dir(data)
+                $scope.user.image = data.image;
             }).error(function(error){
               console.log(error);
             })

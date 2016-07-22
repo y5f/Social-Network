@@ -9,7 +9,7 @@ var crypto = require('crypto');
 
 
 function createToken(user) {
-  return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*5 });
+  return jwt.sign(_.omit(user, 'password'), config.secret, { expiresIn: 60*60*6 });
 }
 
 module.exports.signup = function(req, response){

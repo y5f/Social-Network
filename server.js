@@ -32,7 +32,7 @@ app.post('/api/user/signup', authenticationController.signup);
 app.post('/api/user/login', authenticationController.login);
 
 //Auth NEW
-app.use('/auth/local', require('./server/auth'));
+//app.use('/auth/local', require('./server/auth'));
 
 var jwtCheck = jwt({
   secret: config.secret

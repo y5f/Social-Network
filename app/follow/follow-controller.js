@@ -1,10 +1,14 @@
 (function(){
   angular.module('social')
-    .controller('FollowController', ['$scope', '$http', function($scope, $http){
+    .controller('FollowController', ['$scope', '$http', 'store', 'jwtHelper', function($scope, $http, store, jwtHelper){
 
       if(localStorage['jwt'] !== undefined){
         //$scope.user = JSON.parse(localStorage['User-Data'])
         $scope.loggedIn = true;
+        $scope.jwt = store.get('jwt');
+        $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
+        $scope.user = $scope.decodedJwt
+
         //console.dir($scope.user)
       }else{
         $scope.loggedIn = false;

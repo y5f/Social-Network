@@ -1,18 +1,23 @@
 (function(){
   angular.module('social')
-    .controller('MainController', ['$scope', '$http', '$interval', function($scope, $http, $interval){
+    .controller('MainController', ['$scope', '$http', '$interval', 'store', 'jwtHelper', function($scope, $http, $interval, store, jwtHelper){
 
-      if(localStorage['User-Data'] !== undefined){
-      $scope.user = JSON.parse(localStorage['User-Data'])
-      //console.dir($scope.user)
+      if(localStorage['jwt'] !== undefined){
+        $scope.loggedIn == true
+        getWastes(true);
       }
 
-      $interval(function(){
+      $scope.jwt = store.get('jwt');
+      $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
+
+      $scope.user = $scope.decodedJwt
+      console.log($scope.user)
+      /*$interval(function(){
         if(localStorage['User-Data'] !== undefined){
         $scope.user = JSON.parse(localStorage['User-Data'])
         //console.dir($scope.user)
         }
-      }, 2000);
+      }, 2000);*/
 
       $scope.sendTweet = function(event){
         //if(event.which === 13){
@@ -128,28 +133,33 @@
           if(initial){
             $scope.wastes = response;
           } else {
-            if(response.length > $scope.wastes.length){
+            if($scope.wastes && response.length > $scope.wastes.length){
                 $scope.incomingWastes = response;
             }
           }
         })
       };
 
-      $interval(function(){
-        getWastes(false);
+      if($scope.loggedIn){
+        $interval(function(){
+          getWastes(false);
 
-        if($scope.incomingWastes){
-          $scope.difference = $scope.incomingWastes.length - $scope.wastes.length;
+          if($scope.incomingWastes){
+            $scope.difference = $scope.incomingWastes.length - $scope.wastes.length;
+          }
+
+        }, 5000);
+
+        $scope.setNewWastes = function(){
+          $scope.wastes = angular.copy($scope.incomingWastes);
+          $scope.incomingWastes = undefined;
         }
+      };
 
-      }, 5000);
-
-      $scope.setNewWastes = function(){
-        $scope.wastes = angular.copy($scope.incomingWastes);
-        $scope.incomingWastes = undefined;
-      }
       //init
-      getWastes(true);
+      //if($scope.loggedIn){
+      //  getWastes(true);
+      //};
       //console.dir($scope.wastes)
 
     }])

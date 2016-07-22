@@ -1,6 +1,7 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var jwt     = require('express-jwt');
 
 var config = require('./config');
 
@@ -29,6 +30,15 @@ app.get('/', function(req,res){
 //Authenticate
 app.post('/api/user/signup', authenticationController.signup);
 app.post('/api/user/login', authenticationController.login);
+
+//Auth NEW
+app.use('/auth/local', require('./server/auth'));
+
+var jwtCheck = jwt({
+  secret: config.secret
+});
+
+app.use('/api', jwtCheck)
 
 //profile
 app.post('/api/profile/editPhoto', multipartMiddleware, profileController.updatePhoto);

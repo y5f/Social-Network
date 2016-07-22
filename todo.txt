@@ -5,11 +5,13 @@
 [Done] fix 'following' newsfeed
 [Alpha] tweet tags
 [Alpha] image crop on upload [look into responding with new image since new image wont show on tweets until logout-login]
-[Alpha] Mobile first responsive design with progressive enhancement etc
-Password encryption using bcrypt
+[Alpha 160720] Mobile first responsive design with progressive enhancement etc.
+[Done 160720] refactor all array pushing into single pushentity function (later move to curried)
+[Done 160721] Password encryption using bcrypt, salt created on signup, login now encrpyts input passwords with salts and compares. Pwds therefore never decrypted.
+[Done 160721] refactor logins with JWTs. Login now encrypts JWTs with a server side secret stored in config. Auth interceptor added to all necessary routes
+[Done 160722] Deploy alpha version to heroku
 
-[done pushing] refactor all array pushing and splicing into single pushentity and spliceentity functions
-refactor logins with JWTs
+Refactor splicing into single spliceentity function
 retweeting in actual newsfeed
 treat tags as hashtags (make browsable)
 markup in tweets
@@ -24,6 +26,7 @@ seeing the activity of those you follow, then stories e.g. 'user voted in this p
 rewrite navbar into directive
 deleting posts if theyre your own
 removing posts from your follow feed
+admin delete users and posts
 test suite
 
 gulp

@@ -2,8 +2,8 @@
   angular.module('social')
     .controller('FollowController', ['$scope', '$http', function($scope, $http){
 
-      if(localStorage['User-Data'] !== undefined){
-        $scope.user = JSON.parse(localStorage['User-Data'])
+      if(localStorage['jwt'] !== undefined){
+        //$scope.user = JSON.parse(localStorage['User-Data'])
         $scope.loggedIn = true;
         //console.dir($scope.user)
       }else{

@@ -4,10 +4,33 @@ body {
   margin-top: 70px;
   font-family: muli;
 }
-
 @font-face {
     font-family: muli;
     src: url(../assets/Muli-Light.ttf);
+}
+.jumbotron{
+  text-align: center;
+}
+.welcome {
+    text-align: center;
+}
+.welcome span{
+  font-size: 2em;
+}
+.login{
+  background-color: #F1F1F1;
+  text-align: center;
+  color: #9ad7da;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding: 10px 10px 10px 10px;
+}
+.loginheader{
+  background-color: #9ad7da;
+  text-align: center;
+  color: #F1F1F1;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .postarea{
   background-color: #9ad7da;

@@ -16,16 +16,25 @@
             controller: "SignUpController"
           })
 
-          .state('editProfile', {
-            url: "/edit-profile",
-            templateUrl: "app/profile/edit-profile-view.html",
-            controller: "EditProfileController"
+          .state('login', {
+            url: "/login",
+            templateUrl: "app/navigation/login.html",
+            controller: "NavigationController"
           })
 
           .state('main', {
             url: "/",
             templateUrl: "/app/main/main.html",
             controller: "MainController"
+          })
+
+          .state('editProfile', {
+            url: "/edit-profile",
+            templateUrl: "app/profile/edit-profile-view.html",
+            controller: "EditProfileController",
+            data: {
+              requiresLogin: true
+            }
           })
 
           .state('follow', {
@@ -40,7 +49,10 @@
           .state('search', {
             url: "/search",
             templateUrl: "/app/search/search.html",
-            controller: "SearchController"
+            controller: "SearchController",
+            data: {
+              requiresLogin : true
+            }
           })
     })
     .run(function($rootScope, $state, store, jwtHelper) {
@@ -48,7 +60,7 @@
         if (to.data && to.data.requiresLogin) {
           if (!store.get('jwt') || jwtHelper.isTokenExpired(store.get('jwt'))) {
             e.preventDefault();
-            $state.go('main');
+            $state.go('login');
           }
         }
       });

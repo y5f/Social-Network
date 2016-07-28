@@ -3,8 +3,10 @@
     .controller('MainController', ['$scope', '$http', '$interval', 'store', 'jwtHelper', function($scope, $http, $interval, store, jwtHelper){
 
       if(localStorage['jwt'] !== undefined){
-        $scope.loggedIn == true
+        $scope.loggedIn = true
         getWastes(true);
+      } else {
+        $scope.loggedIn = false;
       }
 
       $scope.jwt = store.get('jwt');

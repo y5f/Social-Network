@@ -16,20 +16,53 @@
 
         $scope.upload = function(dataUrl, name){
           //if(file){
-            Upload.upload({
-              url: 'api/profile/editPhoto',
-              method: 'POST',
-              data: {
-                userId: $scope.user._id,
-                file: Upload.dataUrltoBlob(dataUrl, name)
-              }
+            var request = {data: dataUrl};
+
+            //console.log(dataUrl)
+            var dataBlob = Upload.dataUrltoBlob(dataUrl, name);
+            var req = {name: dataBlob.$ngfName, id: $scope.user._id};
+            //var req = 'hillo';
+
+            $http.post('api/profile/editPhoto', req).success(function(response){
+              /*Upload.upload({
+                method: 'PUT',
+                //headers: {'Content-Type': file.type != '' ? file.type : 'application/octet-stream'},
+                url: response.uploadUrl,
+                data: Upload.dataUrltoBlob(dataUrl, name)
+                  //{
+                  //userId: $scope.user._id,
+                  //file: Upload.dataUrltoBlob(dataUrl, name)
+                //}*/
+                console.dir(response);
+                var signedUrl = response.uploadUrl;
+                var file = Upload.dataUrltoBlob(dataUrl, name); //request.data.file;
+                // ...
+                //var d_completed = $q.defer(); // since I'm working with Angular, I use $q for asynchronous control flow, but it's not mandatory
+                var xhr = new XMLHttpRequest();
+                xhr.file = file; // not necessary if you create scopes like this
+
+                xhr.onreadystatechange = function(e) {
+                  if ( 4 == this.readyState ) {
+                    // done uploading! HURRAY!
+                    //d_completed.resolve(true);
+                  }
+                };
+                xhr.open('PUT', signedUrl, true);
+                xhr.setRequestHeader("Content-Type","image");
+                xhr.send(file);
+
+                $scope.user.image = response.objectUrl;
+                console.log($scope.user)
               /*data: {userId: $scope.user._id},
               file: file*/
+            /*
             }).progress(function(evt){
               console.log("uploading");
             }).success(function(data){
-                console.dir(data)
-                $scope.user.image = data.image;
+                //new code to get S3 link
+                console.dir(data, {depth: 1});
+                //console.dir(data)
+                //$scope.user.image = data.image;*/
             }).error(function(error){
               console.log(error);
             })
@@ -62,6 +95,9 @@
         }
     }]);
 }());
+
+
+//code below to add for progess bar for uploading. From http://jsfiddle.net/danialfarid/xxo3sk41/590/
 
 
 /*app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {

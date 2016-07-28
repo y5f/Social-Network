@@ -3,7 +3,12 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var jwt     = require('express-jwt');
 
-var config = require('./config');
+//var config = require('./config');
+
+require('dotenv').config();
+
+//var dotenv = require('dotenv');
+//dotenv.load();
 
 var app = express();
 var authenticationController = require('./server/controllers/authentication-controller');
@@ -15,7 +20,8 @@ var searchController = require('./server/controllers/search-controller');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 
-mongoose.connect(config.mongo.uri)
+mongoose.connect(process.env.MONGODB_URI)
+console.log("Connected to mongo:", process.env.MONGODB_URI)
 
 app.use(bodyParser.json());
 app.use(multipartMiddleware);
@@ -35,13 +41,13 @@ app.post('/api/user/login', authenticationController.login);
 //app.use('/auth/local', require('./server/auth'));
 
 var jwtCheck = jwt({
-  secret: config.secret
+  secret: process.env.SECRET
 });
 
 app.use('/api', jwtCheck)
 
 //profile
-app.post('/api/profile/editPhoto', multipartMiddleware, profileController.updatePhoto);
+app.post('/api/profile/editPhoto', profileController.updatePhoto); //multipartMiddleware,
 app.post('/api/profile/updateUsername', profileController.updateUsername);
 app.post('/api/profile/updateBio', profileController.updateBio);
 
@@ -63,5 +69,5 @@ app.post('/api/users/unretweet', userController.unretweet);
 app.post('/api/search', searchController.search);
 
 app.listen(process.env.PORT || '3000' , function(){
-  console.log("Server listening on port 3000")
+  console.log("Server listening on port", process.env.PORT || '3000')
 })

@@ -4,18 +4,20 @@ angular.module('social')
   .controller('NavigationController', ['$scope', '$http', '$state', '$rootScope', 'Auth', 'store', 'jwtHelper', function($scope, $http, $state, $rootScope, Auth, store, jwtHelper){
 
       //$scope.user = JSON.parse(localStorage['User-Data']);
+      getUserFromJwt();
 
-      if(localStorage['jwt']){
-        $scope.loggedIn = true;
-        console.log("logged in? ", $scope.loggedIn)
-        $scope.jwt = store.get('jwt');
-        $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
-        $scope.user = $scope.decodedJwt
-        console.log($scope.user)
-      }else{
-        $scope.loggedIn = false;
+      function getUserFromJwt(){
+        if(localStorage['jwt']){
+          $scope.loggedIn = true;
+          console.log("logged in? ", $scope.loggedIn)
+          $scope.jwt = store.get('jwt');
+          $scope.decodedJwt = $scope.jwt && jwtHelper.decodeToken($scope.jwt);
+          $scope.user = $scope.decodedJwt
+          console.log($scope.user)
+        }else{
+          $scope.loggedIn = false;
+        }
       }
-
 
       $scope.logUserIn = function(){
         $http.post('api/user/login', $scope.login).success(function(response){
@@ -35,6 +37,8 @@ angular.module('social')
               $state.go('main');
             }
 
+            getUserFromJwt();
+
         }).error(function(error){
             console.log(error);
           });
@@ -46,6 +50,13 @@ angular.module('social')
       $scope.logOut = function(){
         localStorage.clear();
         $scope.loggedIn = false;
+
+        //redirect user to home page
+        if($state.current.name === 'main'){
+          $state.reload();
+        }else{
+          $state.go('main');
+        }
       }
 
       $scope.search = function () {

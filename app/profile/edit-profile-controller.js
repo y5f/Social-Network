@@ -96,7 +96,10 @@
     }]);
 }());
 
+
 //code below to add for progess bar for uploading. From http://jsfiddle.net/danialfarid/xxo3sk41/590/
+
+
 /*app.controller('MyCtrl', ['$scope', 'Upload', '$timeout', function ($scope, Upload, $timeout) {
     $scope.upload = function (dataUrl, name) {
         Upload.upload({
